@@ -1,0 +1,224 @@
+<div data-section-id="{{ section.id }}"  data-section-type="home-product-grid-type-7" class="home-product-grid-type-7">
+  {% if settings.show_portfolio_section %}
+  {%- assign collection = collections[section.settings.collection] -%}
+  {%- assign product_limit = section.settings.limit -%}
+  <div class="home-product-grid-type-7">
+    {% if section.settings.portfolio_title != blank or section.settings.portfolio_text  %}
+    <div class="section-header section-header--small">
+      <div class="border-title"> 
+        {% endif %}
+        {% if section.settings.portfolio_title != blank %}
+        <h2 style="color:{{ section.settings.portfolio_title_clr }};">{{ section.settings.portfolio_title }}</h2>
+        {% endif %}  
+        {% if section.settings.portfolio_text != blank %}
+        <div class="short-desc">
+          <p style="color:{{ section.settings.portfolio_text_clr }};">{{ section.settings.portfolio_text }}</p>
+        </div> 
+        {% endif %}  
+        {% if section.settings.portfolio_title != blank or section.settings.portfolio_text  %} 
+         {% if section.settings.header_image_show %}<span style="margin-top:10px;background:url('{{ section.settings.header_image | img_url: 'master' }}');background-repeat:no-repeat;width:165px;height:36px;text-align:center;margin:auto;display:block;"></span>{% endif %}
+  <div class="dt-sc-hr-invisible-small"></div>
+      </div>
+    </div>
+    {% endif %}
+
+
+    <div class="grid__item  text-center">   
+      <div class="sorting-container">
+      {% if section.settings.portfolio_tag_1 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".all-sort" class="active-all" href="#">{{ section.settings.portfolio_tag_1 }}</a>{% endif %}  
+      {% if section.settings.portfolio_tag_2 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_2 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_2 }}</a> {% endif %}  
+      {% if section.settings.portfolio_tag_3 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_3 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_3 }}</a> {% endif %}  
+      {% if section.settings.portfolio_tag_4 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_4 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_4 }}</a> {% endif %}  
+      {% if section.settings.portfolio_tag_5 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_5 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_5 }}</a> {% endif %}  
+      {% if section.settings.portfolio_tag_6 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_6 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_6 }}</a> {% endif %}  
+      {% if section.settings.portfolio_tag_7 != blank %}    <a style="color:{{ section.settings.tags_text_clr }};" data-filter=".{{ section.settings.portfolio_tag_7 | replace: ' ', '-' | downcase  }}" href="#">{{ section.settings.portfolio_tag_7 }}</a> {% endif %}       
+      </div>    
+    </div>
+{% case section.settings.grid %}
+            {% when '2' %}
+            {%- assign grid_item_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}
+            {% when '3' %}
+            {%- assign grid_item_width = 'wide--one-third post-large--one-third large--one-third medium--one-third small-grid__item' -%}
+            {% when '4' %}
+            {%- assign grid_item_width = 'wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small-grid__item' -%}
+            {% when '5' %}
+            {%- assign grid_item_width = 'wide--one-fifth post-large--one-quarter large--one-quarter medium--one-third small-grid__item' -%}            
+            {% endcase %}
+    <div class="portfolio-container cs-style-3">        
+      {% for product in collection.products  limit: product_limit %}
+      <div class="column grid__item {{ grid_item_width }}  small--grid__item text-center gallery no-space {% include 'port-check' %} all-sort">
+        {% include 'isotop-grid-item' %}
+      </div>  
+      {% else %}
+
+      {% for i in (1..product_limit) %}
+      <div class="column grid__item {{ grid_item_width }} small--grid__item text-center gallery no-space {% include 'port-check' %} all-sort">
+        <div class="grid-view-item">
+          <a href="#" class="grid-view-item__link">
+            <div class="grid-view-item__image">
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>             
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div> 
+  </div>
+  {% endif %}
+  
+  <style>
+    
+    .home-product-grid-type-7 .sorting-container a.active-all,.home-product-grid-type-7 .sorting-container a:hover { color:{{ section.settings.tags_active_clr }} !important;background:{{ section.settings.tags_bg_clr }};border:1px solid {{ section.settings.tags_bg_clr }}; }
+    .home-product-grid-type-7 .sorting-container a { border-color:{{ section.settings.tags_border_clr }}  }
+  </style>
+  
+  <div class="dt-sc-hr-invisible-large"></div>
+</div>
+{% schema %}
+{
+"name": "Sortable Products",
+"class": "index-section",  
+"settings": [
+  {
+  "type": "text",
+  "id": "portfolio_title",
+  "label": "Heading",
+  "default": "Portfolio Service"
+  },
+{
+"type": "checkbox",
+"id": "header_image_show",
+"label": "Heading Image ?"
+},
+{
+"type": "image_picker",
+"id": "header_image",
+"label": "Heading Image",
+"info": "Size: 165x36"
+},
+ {
+  "type": "color",
+  "id": "portfolio_title_clr",
+  "label": "Heading",
+  "default": "#000"
+  },	
+  {
+  "type": "textarea",
+  "id": "portfolio_text",
+  "label": "Description"          
+  },
+{
+  "type": "color",
+  "id": "portfolio_text_clr",
+  "label": "Description",
+  "default": "#000"
+  },
+{
+      "id": "collection",
+      "type": "collection",
+      "label": "Collection"
+    },
+{
+  "type": "color",
+  "id": "tags_text_clr",
+  "label": "Tags",
+  "default": "#000"
+  },
+{
+  "type": "color",
+  "id": "tags_active_clr",
+  "label": "Tag Active",
+  "default": "#000"
+  },
+{
+  "type": "color",
+  "id": "tags_border_clr",
+  "label": "Tag Border",
+  "default": "#000"
+  },
+{
+  "type": "color",
+  "id": "tags_bg_clr",
+  "label": "Tag Bg",
+  "default": "#000"
+  },
+  {
+  "type": "text",
+  "id": "portfolio_tag_1",
+  "label": "Tag 1"          
+  },
+  {
+  "type": "text",
+  "id": "portfolio_tag_2",
+  "label": "Tag 2"          
+  },
+  {
+  "type": "text",
+  "id": "portfolio_tag_3",
+  "label": "Tag 3"          
+  },
+  {
+  "type": "text",
+  "id": "portfolio_tag_4",
+  "label": "Tag 4"          
+  },
+  {
+  "type": "text",
+  "id": "portfolio_tag_5",
+  "label": "Tag 5"          
+  },
+  {
+  "type": "text",
+  "id": "portfolio_tag_6",
+  "label": "Tag 6"          
+  },
+  {
+  "type": "text",
+  "id": "portfolio_tag_7",
+  "label": "Tag 7"          
+  },
+{
+      "type": "select",
+      "id": "grid",
+      "label": "Products per row",
+      "default": "3",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        }
+      ]
+    },
+{
+  "type": "text",
+  "id": "limit",
+  "label": "Product limit",
+   "default": "8"
+  }
+ 
+],
+"presets": [
+  {
+  "name": "Sortable Products",
+  "category": "Collection",
+  "blocks": [ ]
+}
+]
+}
+{% endschema %}
+
+

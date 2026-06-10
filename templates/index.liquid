@@ -1,0 +1,9 @@
+{% if settings.display_slideshow %}
+{% if settings.slideshow_type == "Flexslider" %}
+{% include 'homepage-flexslider' %}
+{% endif %}
+{% if settings.slideshow_type == "Revolution" %}
+{% section 'slider-revolution' %}
+{% endif %}
+{% endif %}
+{{ content_for_index }}

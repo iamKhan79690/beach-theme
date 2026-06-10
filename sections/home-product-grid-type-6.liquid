@@ -1,0 +1,208 @@
+<div data-section-id="{{ section.id }}"  data-section-type="home-product-grid-type-6" class="home-product-grid-type-6">
+  {%- assign collection = collections[section.settings.collection] -%}
+  {%- assign limit = section.settings.grid | times: section.settings.rows -%}  
+  <div class="full_width_tab load-wrapper">       
+    {% if section.settings.title != blank or section.settings.small_title  %}
+    <div class="section-header section-header--small">
+      <div class="border-title">
+        {% endif %}            
+        {% if section.settings.title != blank %}
+        <h2 class="section-header__title" style="color:{{section.settings.title_clr }};">    
+          {{ section.settings.title }}
+        </h2>
+        {% endif %}  
+        {% if section.settings.small_title != blank %} <div class="short-desc"> <p style="color:{{section.settings.small_title_clr }};">{{ section.settings.small_title }}</p></div>{% endif %}  
+        {% if section.settings.title != blank or section.settings.small_title  %}
+{% if section.settings.header_image_show %}<span style="margin-top:10px;background:url('{{ section.settings.header_image | img_url: 'master' }}');background-repeat:no-repeat;width:165px;height:36px;text-align:center;margin:auto;display:block;"></span>{% endif %}      </div>
+  <div class="dt-sc-hr-invisible-small"></div>
+    </div>    
+    <div class="dt-sc-hr-invisible-small"></div>
+    {% endif %}      
+    {% case section.settings.grid %}
+    {% when '2' %}
+    {%- assign grid_item_width = 'wide--one-half post-large--one-half large--one-half medium--one-half small-grid__item' -%}
+    {% when '3' %}
+    {%- assign grid_item_width = 'wide--one-third post-large--one-third large--one-third medium--one-third small-grid__item' -%}
+    {% when '4' %}
+    {%- assign grid_item_width = 'wide--one-quarter post-large--one-quarter large--one-quarter medium--one-half small-grid__item' -%}
+    {% when '5' %}
+    {%- assign grid_item_width = 'wide--one-fifth post-large--one-fifth large--one-third medium--one-half small-grid__item' -%}            
+    {% endcase %}
+
+    <div class="grid-uniform">
+      {% if section.settings.alignment == 'left' %}
+      <div class="grid__item wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item left">
+        <ul class="type4__singele_items">
+          {% for product in collection.products limit:1 %}
+          {% include 'deal-grid-item-single'  %}          
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <div class="grid__item wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item">              
+        <ul class="type4__items">
+          {% for product in collection.products limit:limit offset:1   %}
+          {% include 'product-grid-item', grid_item_width:grid_item_width %}          
+          {% endfor %}
+        </ul>      
+      </div>
+      {% if section.settings.alignment == 'right' %}
+      <div class="grid__item wide--one-half post-large--one-half large--one-half medium--grid__item small-grid__item right">
+        <ul class="type4__singele_items">
+          {% for product in collection.products limit:1 %}
+          {% include 'deal-grid-item-single'  %}          
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="dt-sc-hr-invisible-large"></div> 
+</div>  
+
+ 
+  
+{% schema %}
+{
+  "name": "Featured Products",
+  "class": "index-section",
+  "max_blocks": 2,
+  "settings": [  
+	{
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "New arrivals"
+    },	
+{
+"type": "checkbox",
+"id": "header_image_show",
+"label": "Heading Image ?"
+},
+{
+"type": "image_picker",
+"id": "header_image",
+"label": "Heading Image",
+"info": "Size: 165x36"
+},
+	{
+      "type": "color",
+      "id": "title_clr",
+      "label": "Heading Color",
+	  "default": "#000"
+	},	
+	{
+      "type": "text",
+      "id": "small_title",
+      "label": "Small Heading"      
+    },	
+	{
+      "type": "color",
+      "id": "small_title_clr",
+      "label": "Small Heading Color",
+	  "default": "#000"      
+	},	
+    {
+      "id": "collection",
+      "type": "collection",
+      "label": "Collection"
+    },
+{
+      "type": "select",
+      "id": "alignment",
+      "label": "Featured product alignment",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }        
+      ]
+    },
+
+    {
+      "type": "select",
+      "id": "grid",
+      "label": "Products per row",
+      "default": "3",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+        
+      ]
+    },
+{
+        "type": "select",
+        "id": "rows",
+        "label": "Rows per page (grid only)",
+        "default": "2",
+        "options": [
+			{
+            "value": "1",
+            "label": "1"
+          },
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          }
+                  
+        ]
+      },
+    {
+     "type": "text",
+     "id": "deal_end_date",
+     "label": "Deal end date",
+     "info": "format should be MM/DD/YYYY_HH:MM:SS "
+    }
+  
+  ],
+
+"blocks": [
+{
+"type": "Image",
+"name": "Featured Image",
+"settings": [	
+{
+"type": "image_picker",
+"id":"image_featured",
+"label":"Image",
+"info": "Size: 900x1200"
+}
+]
+}
+],
+  "presets": [
+    {
+     "name": "Featured Products",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
